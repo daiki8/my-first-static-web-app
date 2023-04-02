@@ -1,0 +1,16 @@
+<div class="container">
+  <h2 class="header">chatAI</h2>
+  <div class="chat-container">
+    <div class="chat-window">
+      <div *ngFor="let chat of chats" class="message-container">
+        <div class="message" [ngClass]="{'user': chat.isUser}">
+          {{ chat.message }}
+        </div>
+      </div>
+    </div>
+    <form class="input-container" (submit)="onSubmit($event)">
+      <input class="input-field" type="text" placeholder="メッセージを入力してください" [(ngModel)]="message" name="message">
+      <button class="send-button" type="submit">送信</button>
+    </form>
+  </div>
+</div>
