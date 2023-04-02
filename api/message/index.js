@@ -7,15 +7,22 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 module.exports = async function (context, req) {
-  const message = req.body.message
-  const completion = await openai.createChatCompletion({
-    model: "gpt-3.5-turbo",
-    messages: [{
-      role: "user", content: message
-    }],
-  });
+  let result = ''
+
+  if (req.body) {
+
+    const completion = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [{
+        role: "user", content: req.body.message
+      }],
+    });
+    result = completion.data.choices[0].message.content
+  } else {
+    result = "No message provided"
+  }
 
   context.res.json({
-      text: completion.data.choices[0].message.content
+      text: result
   });
 };
